@@ -1,7 +1,7 @@
 BotBits.Old
 --------------
 
-BotBits is great for building bots for EverybodyEdits, but what about the newly added [old.everybodyedits.com](http://old.everybodyedits.com/) game?  
+[BotBits](http://github.com/Yonom/BotBits) is great for building bots for EverybodyEdits, but what about the newly added [old.everybodyedits.com](http://old.everybodyedits.com/) game?  
 Bots have always been fun because they've dealt with the many limitations the game had and it will be very interesting to see what people can come up with in the old everybodyedits where many features of modern EE are unavailable.  
 
 BotBits.Old acts as an extension to the existing BotBits framework. This means that bots written in the original BotBits framework can work with BotBits.Old after changing two or three lines of code!  
