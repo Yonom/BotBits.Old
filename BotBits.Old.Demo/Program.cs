@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BotBits.Events;
+using BotBits.SendMessages;
 
 namespace BotBits.Old.Demo
 {
@@ -32,6 +33,13 @@ namespace BotBits.Old.Demo
         static void OnMove(MoveEvent e)
         {
             Console.WriteLine("{0} {1} {2}", e.Player.Username, e.X, e.Y);
+        }
+
+        [EventListener]
+        static async void OnInit(InitEvent e)
+        {
+            //Blocks.Of(bot).In(new Rectangle(50, 50, 50, 50)).Set(Foreground.Basic.Blue);
+            Blocks.Of(bot).In(new Rectangle(50, 50, 50, 50)).Set(Foreground.Basic.Green);
         }
     }
 }

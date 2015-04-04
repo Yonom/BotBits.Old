@@ -12,9 +12,9 @@ namespace BotBits.Old
         public static void Enable(BotBitsClient client)
         {
             var handle = new SendHandle(client);
-            PlaceSendMessage.Of(client).Send += handle.Send;
-            SmileySendMessage.Of(client).Send += handle.Send;
-            MoveSendMessage.Of(client).Send += handle.Send;
+            PlaceSendMessage.Of(client).Sending += handle.Sending;
+            SmileySendMessage.Of(client).Sending += handle.Sending;
+            MoveSendMessage.Of(client).Sending += handle.Sending;
         }
 
         class SendHandle
@@ -26,12 +26,15 @@ namespace BotBits.Old
                 this._client = client;
             }
 
-            public void Send<T>(object sender, SendQueueEventArgs<T> e) where T : SendMessage<T>
+            public void Sending<T>(object sender, SendingEventArgs<T> e) where T : SendMessage<T>
             {
-                e.Cancelled = true;
+                if (!e.Cancelled)
+                {
+                    e.Cancelled = true;
 
-                MessageServices.EnableInstantSend(() =>
-                    e.Message.SendIn(this._client));
+                    MessageServices.EnableInstantSend(() =>
+                        e.Message.SendIn(this._client));
+                }
             } 
         }
     }
