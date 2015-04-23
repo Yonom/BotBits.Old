@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotBits.Old", "BotBits.Old\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotBits.Old.Demo", "BotBits.Old.Demo\BotBits.Old.Demo.csproj", "{6BAE8080-3627-4D70-9618-4D504467B816}"
 EndProject
+Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "BotBits.Old.NuGet", "BotBits.Old.NuGet\BotBits.Old.NuGet.nuproj", "{719BD14A-9815-43D2-B4D0-2F4E80773AEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6BAE8080-3627-4D70-9618-4D504467B816}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BAE8080-3627-4D70-9618-4D504467B816}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BAE8080-3627-4D70-9618-4D504467B816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{719BD14A-9815-43D2-B4D0-2F4E80773AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{719BD14A-9815-43D2-B4D0-2F4E80773AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{719BD14A-9815-43D2-B4D0-2F4E80773AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{719BD14A-9815-43D2-B4D0-2F4E80773AEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

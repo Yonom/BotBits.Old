@@ -32,8 +32,12 @@ namespace BotBits.Old
                 {
                     e.Cancelled = true;
 
-                    MessageServices.EnableInstantSend(() =>
-                        e.Message.SendIn(this._client));
+                    if (!e.Message.SkipsQueue)
+                    {
+                        MessageServices.EnableInstantSend(() =>
+                            e.Message.SendIn(this._client));
+                         
+                    }
                 }
             } 
         }

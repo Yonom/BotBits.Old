@@ -42,6 +42,11 @@ namespace BotBits.Old
                 .ToSafeTask();
         }
 
+        public Task<DatabaseWorld> LoadWorldAsync(string roomId)
+        {
+            throw new System.NotSupportedException("There are no saved world in old EverybodyEdits!");
+        }
+
         private void InitConnection(Connection conn)
         {
             this._connectionManager.AttachConnection(conn,

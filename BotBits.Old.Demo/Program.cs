@@ -36,10 +36,10 @@ namespace BotBits.Old.Demo
         }
 
         [EventListener]
-        static async void OnInit(InitEvent e)
+        static void OnInit(InitEvent e)
         {
             //Blocks.Of(bot).In(new Rectangle(50, 50, 50, 50)).Set(Foreground.Basic.Blue);
-            Blocks.Of(bot).In(new Rectangle(50, 50, 50, 50)).Set(Foreground.Basic.Green);
+            Blocks.Of(bot).In(new Rectangle(0, 0, 70, 70)).Set(OldBlock.Basic.Green);
         }
     }
 }
