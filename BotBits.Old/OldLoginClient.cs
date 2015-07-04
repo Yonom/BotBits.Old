@@ -9,23 +9,27 @@ namespace BotBits.Old
     public sealed class OldLoginClient : ILoginClient 
     {
         private readonly IConnectionManager _connectionManager;
-        private readonly LoginClient _innerLoginClient;
         private const string FlixelWalker = "FlixelWalker";
         private const int Version = 1;
 
-        public Client Client { get { return _innerLoginClient.Client; } }
+        public Client Client { get; private set; }
 
         public OldLoginClient(IConnectionManager connectionManager, Client client)
         {
             this._connectionManager = connectionManager;
-            this._innerLoginClient = new LoginClient(connectionManager, client);
+            this.Client = client;
         }
 
         public Task<LobbyItem[]> GetLobbyAsync()
         {
             return this.Client.GetLobbyRoomsAsync(this, FlixelWalker + Version).ToSafeTask();
         }
-        
+
+        public Task CreateOpenWorldAsync(string roomId, string name)
+        {
+            throw new System.NotSupportedException("Open worlds are not supported.");
+        }
+
         public Task CreateJoinRoomAsync(string roomId)
         {
             return this.Client.Multiplayer
