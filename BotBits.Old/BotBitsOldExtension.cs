@@ -2,9 +2,9 @@
 {
     public sealed class BotBitsOldExtension : Extension<BotBitsOldExtension>
     {
-        public static void LoadInto(BotBitsClient client)
+        public static bool LoadInto(BotBitsClient client)
         {
-            LoadInto(client, null);
+            return LoadInto(client, null);
         }
     }
 }
