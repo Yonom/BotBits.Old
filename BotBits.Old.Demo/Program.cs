@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using BotBits.Events;
-using BotBits.SendMessages;
 
 namespace BotBits.Old.Demo
 {
@@ -23,8 +19,8 @@ namespace BotBits.Old.Demo
 
             OldConnectionManager
                 .Of(bot)
-                .Connect()
-                .CreateJoinRoom(0, 0);
+                .ConnectAsync()
+                .CreateJoinRoomAsync(0, 0);
             
             Thread.Sleep(-1);
         }

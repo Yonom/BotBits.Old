@@ -32,8 +32,8 @@ namespace BotBits.Old
 
         public void SetConnection(IConnection connection, ConnectionArgs args)
         {
-            global::BotBits.ConnectionManager
-                .Of(BotBits)
+            ConnectionManager
+                .Of(this.BotBits)
                 .SetConnection(connection, args);
         }
 
@@ -42,13 +42,13 @@ namespace BotBits.Old
             return new OldLoginClient(this, client);
         }
 
-        public OldLoginGame WithGame(string gameId)
+        public OldPlayerIOGame WithGame(string gameId)
         {
-            return new OldLoginGame(this, gameId);
+            return new OldPlayerIOGame(this, gameId);
         }
 
         public string GameId { get { return "everybody-edits-old-gue3mggr0mppaimep8jw"; } }
-        public IConnectionManager<OldLoginClient> ConnectionManager { get { return this; } }
+        IConnectionManager<OldLoginClient> IPlayerIOGame<OldLoginClient>.ConnectionManager { get { return this; } }
 
         public void Dispose()
         {
