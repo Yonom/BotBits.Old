@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using PlayerIOClient;
 
@@ -20,7 +21,7 @@ namespace BotBits.Old
 
         public Task<LobbyItem[]> GetLobbyAsync()
         {
-            return this.Client.GetLobbyRoomsAsync(this, FlixelWalker + Version).ToSafeTask();
+            return this.GetLobbyRoomsAsync(this.Client, FlixelWalker + Version).ToSafeTask();
         }
 
         Task ILoginClient.CreateOpenWorldAsync(string roomId, string name)
@@ -64,5 +65,15 @@ namespace BotBits.Old
         }
 
         public string ConnectUserId { get { return this.Client.ConnectUserId; } }
+
+        public Task<LobbyItem[]> GetLobbyRoomsAsync(Client client, string roomType)
+        {
+            return client.Multiplayer
+                .ListRoomsAsync(roomType, null, 0, 0)
+                .Then(r => r.Result
+                    .Select(room => new LobbyItem(this, room))
+                    .ToArray())
+                .ToSafeTask();
+        }
     }
 }

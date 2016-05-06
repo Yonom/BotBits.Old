@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BotBits.Events;
 using BotBits.SendMessages;
 using PlayerIOClient;
 
@@ -12,9 +13,9 @@ namespace BotBits.Old
         public static void Enable(BotBitsClient client)
         {
             var handle = new SendHandle(client);
-            PlaceSendMessage.Of(client).Sending += handle.Sending;
-            SmileySendMessage.Of(client).Sending += handle.Sending;
-            MoveSendMessage.Of(client).Sending += handle.Sending;
+            SendingEvent<PlaceSendMessage>.Of(client).Bind(handle.Sending);
+            SendingEvent<SmileySendMessage>.Of(client).Bind(handle.Sending);
+            SendingEvent<MoveSendMessage>.Of(client).Bind(handle.Sending);
         }
 
         class SendHandle
@@ -26,7 +27,7 @@ namespace BotBits.Old
                 this._client = client;
             }
 
-            public void Sending<T>(object sender, SendingEventArgs<T> e) where T : SendMessage<T>
+            public void Sending<T>(SendingEvent<T> e) where T : SendMessage<T>
             {
                 if (!e.Cancelled)
                 {
@@ -36,7 +37,6 @@ namespace BotBits.Old
                     {
                         MessageServices.EnableInstantSend(() =>
                             e.Message.SendIn(this._client));
-                         
                     }
                 }
             } 

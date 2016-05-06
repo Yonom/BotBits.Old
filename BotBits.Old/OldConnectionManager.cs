@@ -8,8 +8,7 @@ using PlayerIOClient;
 
 namespace BotBits.Old
 {
-    public sealed class OldConnectionManager : Package<OldConnectionManager>, IDisposable,
-        IPlayerIOGame<OldLoginClient>, IConnectionManager<OldLoginClient>
+    public sealed class OldConnectionManager : Package<OldConnectionManager>, IDisposable, IConnectionManager
     {
         private OldPlayerIOConnectionAdapter _adapter;
 
@@ -37,23 +36,26 @@ namespace BotBits.Old
                 .SetConnection(connection, args);
         }
 
+        public void Dispose()
+        {
+            if (this._adapter != null)
+                this._adapter.Disconnect();
+        }
+    }
+
+    public sealed class OldLogin : Package<OldLogin>, IPlayerIOGame<OldLoginClient>, ILogin<OldLoginClient>
+    {
         public OldLoginClient WithClient(Client client)
         {
-            return new OldLoginClient(this, client);
+            return new OldLoginClient(OldConnectionManager.Of(this.BotBits), client);
         }
 
         public OldPlayerIOGame WithGame(string gameId)
         {
             return new OldPlayerIOGame(this, gameId);
         }
-
-        public string GameId { get { return "everybody-edits-old-gue3mggr0mppaimep8jw"; } }
-        IConnectionManager<OldLoginClient> IPlayerIOGame<OldLoginClient>.ConnectionManager { get { return this; } }
-
-        public void Dispose()
-        {
-            if (this._adapter != null)
-                this._adapter.Disconnect();
-        }
+        
+        public string GameId => "everybody-edits-old-gue3mggr0mppaimep8jw";
+        ILogin<OldLoginClient> IPlayerIOGame<OldLoginClient>.Login => this;
     }
 }

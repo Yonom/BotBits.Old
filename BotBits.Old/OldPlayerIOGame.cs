@@ -9,12 +9,12 @@ namespace BotBits.Old
 {
     public sealed class OldPlayerIOGame : IPlayerIOGame<OldLoginClient>
     {
-        public string GameId { get; private set; }
-        public IConnectionManager<OldLoginClient> ConnectionManager { get; private set; }
+        public string GameId { get; }
+        public ILogin<OldLoginClient> Login { get; }
 
-        public OldPlayerIOGame(IConnectionManager<OldLoginClient> connectionManager, string gameId)
+        public OldPlayerIOGame(ILogin<OldLoginClient> login, string gameId)
         {
-            this.ConnectionManager = connectionManager;
+            this.Login = login;
             this.GameId = gameId;
         }
     }

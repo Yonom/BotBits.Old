@@ -17,7 +17,7 @@ namespace BotBits.Old.Demo
             BotBitsOldExtension
                 .LoadInto(bot);
 
-            OldConnectionManager
+            OldLogin
                 .Of(bot)
                 .ConnectAsync()
                 .CreateJoinRoomAsync(0, 0);
