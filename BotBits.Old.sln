@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotBits.Old.Demo", "BotBits
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{7CD06DFB-D61C-4661-B59A-B2F4CFDABB6D}"
 EndProject
-Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "BotBits.Old.NuGet", "Nuget\BotBits.Old\BotBits.Old.NuGet.nuproj", "{719BD14A-9815-43D2-B4D0-2F4E80773AEB}"
+Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "BotBits.Old", "Nuget\BotBits.Old\BotBits.Old.nuproj", "{719BD14A-9815-43D2-B4D0-2F4E80773AEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
