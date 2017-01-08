@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BotBits.Old\BotBits.Old.csproj" />
+    <ProjectReference Include="..\..\BotBits.Old\BotBits.Old.csproj" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>719bd14a-9815-43d2-b4d0-2f4e80773aeb</ProjectGuid>
@@ -22,7 +22,7 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>BotBits.Old</Id>
-    <Version>1.1.2</Version>
+    <Version>2.0.0</Version>
     <Title>BotBits.Old</Title>
     <Authors>Younom</Authors>
     <Owners>Younom</Owners>

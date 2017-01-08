@@ -8,14 +8,17 @@ namespace BotBits.Old
         {
             return client.CreateJoinRoomAsync(column + "x" + row);
         }
+
         public static Task JoinRoomAsync(this OldLoginClient client, int row, int column)
         {
             return client.JoinRoomAsync(column + "x" + row);
         }
+
         public static void JoinRoom(this OldLoginClient client, int row, int column)
         {
             client.CreateJoinRoom(column + "x" + row);
         }
+
         public static void CreateJoinRoom(this OldLoginClient client, int row, int column)
         {
             client.CreateJoinRoom(column + "x" + row);
@@ -25,6 +28,7 @@ namespace BotBits.Old
         {
             return client.Then(task => task.Result.CreateJoinRoomAsync(worldId)).ToSafeTask();
         }
+
         public static Task JoinRoomAsync(this Task<OldLoginClient> client, string worldId)
         {
             return client.Then(task => task.Result.JoinRoomAsync(worldId)).ToSafeTask();
@@ -34,6 +38,7 @@ namespace BotBits.Old
         {
             return client.Then(task => task.Result.CreateJoinRoomAsync(column, row)).ToSafeTask();
         }
+
         public static Task JoinRoomAsync(this Task<OldLoginClient> client, int row, int column)
         {
             return client.Then(task => task.Result.JoinRoomAsync(column, row)).ToSafeTask();

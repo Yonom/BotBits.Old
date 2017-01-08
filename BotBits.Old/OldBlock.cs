@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BotBits.Old
+﻿namespace BotBits.Old
 {
     public static class OldBlock
     {
@@ -33,7 +28,6 @@ namespace BotBits.Old
         public static class Brick
         {
             public static Foreground.Id
-
                 Brown = (Foreground.Id)12,
                 Teal = (Foreground.Id)13,
                 Violet = (Foreground.Id)14,
@@ -44,6 +38,7 @@ namespace BotBits.Old
         {
             public static Foreground.Id
                 Face = (Foreground.Id)16;
+
             public static Foreground.Id
                 FullyBlack = (Foreground.Id)20;
         }

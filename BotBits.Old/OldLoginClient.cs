@@ -7,17 +7,19 @@ namespace BotBits.Old
 {
     public sealed class OldLoginClient : ILoginClient
     {
-        private readonly IConnectionManager _connectionManager;
         private const string FlixelWalker = "FlixelWalker";
         private const int Version = 1;
+        private readonly OldConnectionManager _oldConnectionManager;
 
-        public Client Client { get; private set; }
-
-        public OldLoginClient(IConnectionManager connectionManager, Client client)
+        public OldLoginClient(OldConnectionManager oldConnectionManager, Client client)
         {
-            this._connectionManager = connectionManager;
+            this._oldConnectionManager = oldConnectionManager;
             this.Client = client;
         }
+
+        public Client Client { get; }
+
+        public string ConnectUserId => this.Client.ConnectUserId;
 
         public Task<LobbyItem[]> GetLobbyAsync()
         {
@@ -52,10 +54,10 @@ namespace BotBits.Old
 
         private void InitConnection(string roomId, Connection conn)
         {
-            this._connectionManager.AttachConnection(conn,
+            this._oldConnectionManager.AttachConnection(conn,
                 new ConnectionArgs(
                     this.ConnectUserId,
-                    roomId, 
+                    roomId,
                     new PlayerData(
                         new PlayerObject(
                             new DatabaseObject()
@@ -63,8 +65,6 @@ namespace BotBits.Old
                         new ShopData(
                             new VaultItem[0]))));
         }
-
-        public string ConnectUserId { get { return this.Client.ConnectUserId; } }
 
         public Task<LobbyItem[]> GetLobbyRoomsAsync(Client client, string roomType)
         {

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BotBits.Events;
+﻿using BotBits.Events;
 using BotBits.SendMessages;
-using PlayerIOClient;
 
 namespace BotBits.Old
 {
@@ -18,7 +13,7 @@ namespace BotBits.Old
             SendingEvent<MoveSendMessage>.Of(client).Bind(handle.Sending);
         }
 
-        class SendHandle
+        private class SendHandle
         {
             private readonly BotBitsClient _client;
 
@@ -39,7 +34,7 @@ namespace BotBits.Old
                             e.Message.SendIn(this._client));
                     }
                 }
-            } 
+            }
         }
     }
 }

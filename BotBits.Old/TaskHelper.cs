@@ -271,7 +271,7 @@ namespace BotBits.Old
         }
 
         /// <summary>
-        /// Analogous to the finally block in a try/finally
+        ///     Analogous to the finally block in a try/finally
         /// </summary>
         public static void Finally(this Task task, Action<Exception> exceptionHandler, Action finalAction = null)
         {

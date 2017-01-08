@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BotBits.SendMessages;
 using PlayerIOClient;
 
 namespace BotBits.Old
 {
-    public sealed class OldConnectionManager : Package<OldConnectionManager>, IDisposable, IConnectionManager
+    public sealed class OldConnectionManager : Package<OldConnectionManager>, IDisposable
     {
         private OldPlayerIOConnectionAdapter _adapter;
 
-        void IConnectionManager.AttachConnection(Connection connection, ConnectionArgs args)
+        public void Dispose()
+        {
+            this._adapter?.Disconnect();
+        }
+
+        public void AttachConnection(Connection connection, ConnectionArgs args)
         {
             var adapter = new OldPlayerIOConnectionAdapter(connection);
             try
@@ -35,12 +35,6 @@ namespace BotBits.Old
                 .Of(this.BotBits)
                 .SetConnection(connection, args);
         }
-
-        public void Dispose()
-        {
-            if (this._adapter != null)
-                this._adapter.Disconnect();
-        }
     }
 
     public sealed class OldLogin : Package<OldLogin>, IPlayerIOGame<OldLoginClient>, ILogin<OldLoginClient>
@@ -50,12 +44,12 @@ namespace BotBits.Old
             return new OldLoginClient(OldConnectionManager.Of(this.BotBits), client);
         }
 
+        public string GameId => "everybody-edits-old-gue3mggr0mppaimep8jw";
+        ILogin<OldLoginClient> IPlayerIOGame<OldLoginClient>.Login => this;
+
         public OldPlayerIOGame WithGame(string gameId)
         {
             return new OldPlayerIOGame(this, gameId);
         }
-        
-        public string GameId => "everybody-edits-old-gue3mggr0mppaimep8jw";
-        ILogin<OldLoginClient> IPlayerIOGame<OldLoginClient>.Login => this;
     }
 }

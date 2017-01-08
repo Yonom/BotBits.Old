@@ -35,8 +35,7 @@ namespace BotBits.Old
             var tcs = new TaskCompletionSource<AsyncVoid>();
             task.ContinueWith(t =>
             {
-                if (t.IsFaulted)
-                    tcs.TrySetException(t.Exception.Flatten().InnerExceptions.FirstOrDefault() ?? t.Exception);
+                if (t.IsFaulted) tcs.TrySetException(t.Exception.Flatten().InnerExceptions.FirstOrDefault() ?? t.Exception);
                 else if (t.IsCanceled) tcs.TrySetCanceled();
                 else tcs.TrySetResult(default(AsyncVoid));
             });
@@ -48,8 +47,7 @@ namespace BotBits.Old
             var tcs = new TaskCompletionSource<T>();
             task.ContinueWith(t =>
             {
-                if (t.IsFaulted)
-                    tcs.TrySetException(t.Exception.Flatten().InnerExceptions.FirstOrDefault() ?? t.Exception);
+                if (t.IsFaulted) tcs.TrySetException(t.Exception.Flatten().InnerExceptions.FirstOrDefault() ?? t.Exception);
                 else if (t.IsCanceled) tcs.TrySetCanceled();
                 else tcs.TrySetResult(t.Result);
             });

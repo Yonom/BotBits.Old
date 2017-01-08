@@ -32,11 +32,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BotBits, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BotBits.211.4.3\lib\net40\BotBits.dll</HintPath>
+      <HintPath>..\packages\BotBits.218.0.3\lib\net40\BotBits.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PlayerIOClient, Version=2.3.6.0, Culture=neutral, PublicKeyToken=c7f7b730653f6a44, processorArchitecture=MSIL">
-      <HintPath>..\packages\PlayerIOClient-Signed.3.2.483\lib\PlayerIOClient.dll</HintPath>
+      <HintPath>..\packages\PlayerIOClient-Signed.3.2.484\lib\PlayerIOClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -62,8 +62,16 @@
     <Compile Include="TaskHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
+  <ItemDefinitionGroup>
+    <Reference>
+      <!-- Prevent all references from being packaged. -->
+      <ExcludeFromNuPkg>true</ExcludeFromNuPkg>
+    </Reference>
+  </ItemDefinitionGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

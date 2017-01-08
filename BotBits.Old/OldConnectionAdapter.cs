@@ -7,24 +7,77 @@ namespace BotBits.Old
 {
     public class OldPlayerIOConnectionAdapter : IConnection, IDisposable
     {
-        private readonly HashSet<int> _knownPlayers = new HashSet<int>(); 
         private readonly PlayerIOConnectionAdapter _innerAdapter;
+        private readonly HashSet<int> _knownPlayers = new HashSet<int>();
 
         public OldPlayerIOConnectionAdapter(Connection connection)
         {
             this._innerAdapter = new PlayerIOConnectionAdapter(connection);
-            this._innerAdapter.OnMessage += _innerAdapter_OnMessage;
+            this._innerAdapter.OnMessage += this._innerAdapter_OnMessage;
         }
 
-        void AddIfNotExists(int userId, int smiley = 0, double x = 16, double y = 16)
+        public void Send(Message message)
         {
-            if (!_knownPlayers.Contains(userId))
+            try
+            {
+                Message m;
+                switch (message.Type)
+                {
+                    case "init":
+                        m = message;
+                        break;
+                    case "11f":
+                        m = Message.Create("face", message[0]);
+                        break;
+                    case "m":
+                        m = Message.Create("update", message[0], message[1], message[2], message[3], message[4], message[5], message[6], message[7]);
+                        break;
+                    case "11": // Block message
+                        m = Message.Create("change", message[1], message[2], message[3]);
+                        break;
+
+                    default:
+                        return;
+                }
+                this._innerAdapter.Send(m);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public void Disconnect()
+        {
+            this._innerAdapter.Disconnect();
+        }
+
+        public bool Connected
+        {
+            get { return this._innerAdapter.Connected; }
+        }
+
+        public event MessageReceivedEventHandler OnMessage;
+
+        public event DisconnectEventHandler OnDisconnect
+        {
+            add { this._innerAdapter.OnDisconnect += value; }
+            remove { this._innerAdapter.OnDisconnect -= value; }
+        }
+
+        public void Dispose()
+        {
+            this._innerAdapter.Dispose();
+        }
+
+        private void AddIfNotExists(int userId, int smiley = 0, double x = 16, double y = 16)
+        {
+            if (!this._knownPlayers.Contains(userId))
             {
                 this.InvokeOnMessage(this.GetAdd(Message.Create("add", userId, smiley, x, y)));
             }
         }
 
-        void _innerAdapter_OnMessage(object sender, Message e)
+        private void _innerAdapter_OnMessage(object sender, Message e)
         {
             Message m;
             switch (e.Type)
@@ -53,42 +106,13 @@ namespace BotBits.Old
             }
             this.InvokeOnMessage(m);
         }
-        
-        public void Send(Message message)
-        {
-            try
-            {
-                Message m;
-                switch (message.Type)
-                {
-                    case "init":
-                        m = message;
-                        break;
-                    case "11f":
-                        m = Message.Create("face", message[0]);
-                        break;
-                    case "m":
-                        m = Message.Create("update", message[0], message[1], message[2], message[3], message[4], message[5], message[6], message[7]);
-                        break;
-                    case "11": // Block message
-                        m = Message.Create("change", message[1], message[2], message[3]);
-                        break;
-
-                    default:
-                        return;
-                }
-                this._innerAdapter.Send(m);
-            }
-            catch (Exception) { }
-
-        }
 
         private Message GetInit(Message e)
         {
             var worldData = e.GetString(0);
             var myId = e.GetInt(1);
 
-            _knownPlayers.Add(myId);
+            this._knownPlayers.Add(myId);
             var m = Message.Create("init", "nobody", "Untitled World", 0, 0, 0, "11",
                 myId,
                 20, 20,
@@ -131,19 +155,19 @@ namespace BotBits.Old
             return m;
         }
 
-        Message GetAdd(Message e)
+        private Message GetAdd(Message e)
         {
             var userId = e.GetInt(0);
             var smiley = e.GetInt(1);
             var x = e.GetInt(1);
             var y = e.GetInt(1);
 
-            _knownPlayers.Add(userId);
-            return Message.Create("add", userId, "Guest-" + userId, smiley, x, y, 
+            this._knownPlayers.Add(userId);
+            return Message.Create("add", userId, "Guest-" + userId, smiley, x, y,
                 false, false, false, 0, 0, false, false, false);
         }
 
-        Message GetMove(Message e)
+        private Message GetMove(Message e)
         {
             var userId = e.GetInt(0);
             var x = e.GetInteger(1);
@@ -156,29 +180,29 @@ namespace BotBits.Old
             var vertical = e.GetDouble(8);
 
 
-            AddIfNotExists(userId, x: x, y: y);
+            this.AddIfNotExists(userId, x: x, y: y);
             return Message.Create("m", userId, x, y, speedX, speedY, modifierX, modifierY, horizontal, vertical,
                 0, false);
         }
-        
-        Message GetSmiley(Message e)
+
+        private Message GetSmiley(Message e)
         {
             var userId = e.GetInt(0);
             var smiley = e.GetInt(1);
 
-            AddIfNotExists(userId, smiley);
+            this.AddIfNotExists(userId, smiley);
             return Message.Create("face", userId, smiley);
         }
 
-        Message GetLeft(Message e)
+        private Message GetLeft(Message e)
         {
             var userId = e.GetInt(0);
 
-            AddIfNotExists(userId);
+            this.AddIfNotExists(userId);
             return Message.Create("left", userId);
         }
-        
-        Message GetBlock(Message e)
+
+        private Message GetBlock(Message e)
         {
             var x = e.GetInteger(0);
             var y = e.GetInteger(1);
@@ -186,30 +210,10 @@ namespace BotBits.Old
             return Message.Create("b", 0, x, y, block);
         }
 
-        public void Disconnect()
-        {
-            this._innerAdapter.Disconnect();
-        }
-
-        public bool Connected { get { return this._innerAdapter.Connected; }}
-
-        public event MessageReceivedEventHandler OnMessage;
-
         protected virtual void InvokeOnMessage(Message e)
         {
             var handler = this.OnMessage;
             if (handler != null) handler(this, e);
-        }
-
-        public event DisconnectEventHandler OnDisconnect
-        {
-            add { this._innerAdapter.OnDisconnect += value; }
-            remove { this._innerAdapter.OnDisconnect -= value; }
-        }
-
-        public void Dispose()
-        {
-            this._innerAdapter.Dispose();
         }
     }
 }
